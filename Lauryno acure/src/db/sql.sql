@@ -60,3 +60,11 @@ CREATE TABLE user_roles (
   name VARCHAR
 (50) NOT NULL
 );
+
+INSERT INTO item_types
+    (name)
+VALUES
+    ('food'),
+    ('drink'),
+    ('electronic'),
+    ('clothes');
