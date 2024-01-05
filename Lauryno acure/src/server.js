@@ -318,3 +318,35 @@ app.get('/api/user_roles', (req, res) => {
   app.listen(port, () => {
     console.log(`Serveris veikia adresu http://localhost:${port}`);
   });
+
+  const app = express();
+
+// Pridėti middleware ir kitus reikalingus dalykus...
+
+app.use(bodyParser.json());
+
+// Simuliuojame vartotojo duomenis
+const users = [
+    { id: 1, email: 'test@example.com', password: 'password123', role: 'user' },
+    // Galite pridėti daugiau vartotojų...
+];
+
+// 3.2, 3.3, 3.4 POST /api/auth/login
+app.post('/api/auth/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // Surasti vartotoją pagal el. paštą
+    const user = users.find(u => u.email === email);
+
+    if (!user || user.password !== password) {
+        return res.status(401).json({ error: 'Neteisingi prisijungimo duomenys' });
+    }
+
+    res.json({ user: { email: user.email, role: user.role } });
+});
+
+// Pradėti serverį
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+});
