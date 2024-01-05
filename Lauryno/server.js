@@ -1,5 +1,3 @@
-'use strict'
-
 const validateMiddleware = (req, res, next) => {
     // Patikrinimas ir validacija laukų
     // ...
