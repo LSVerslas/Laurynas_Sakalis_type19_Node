@@ -30,3 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Implement functionality to filter orders by selected user
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // ... Puslapio įkėlimo logika ...
+
+    const userRole = localStorage.getItem('userRole');
+    const userSelect = document.getElementById('userSelect');
+
+    if (userRole === 'admin') {
+        userSelect.style.display = 'block';
+    }
+
+    userSelect.addEventListener('change', function () {
+        // Implement functionality to filter orders by selected user
+    });
+});

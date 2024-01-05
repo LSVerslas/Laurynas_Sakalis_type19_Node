@@ -29,3 +29,25 @@ function addToCart() {
 function deleteItem() {
     // Implement functionality to delete item
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // ... Puslapio įkėlimo logika ...
+
+    const addItemButton = document.getElementById('addItemButton');
+    const deleteItemButton = document.getElementById('deleteItemButton');
+
+    const userRole = localStorage.getItem('userRole');
+
+    if (userRole === 'admin') {
+        addItemButton.style.display = 'block';
+        deleteItemButton.style.display = 'block';
+    }
+});
+
+function addToCart() {
+    // Implement functionality to add item to cart
+}
+
+function deleteItem() {
+    // Implement functionality to delete item
+}
