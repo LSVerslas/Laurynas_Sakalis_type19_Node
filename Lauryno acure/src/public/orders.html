@@ -10,7 +10,29 @@
   </head>
   <body>
     <h1>Orders Page</h1>
-    <!-- Įtraukite užsakymų sąrašą ir kitus elementus -->
+    <label for="userSelect">Select User:</label>
+    <select id="userSelect" onchange="loadOrders()">
+      <!-- Galite užpildyti pasirinkimus dinamiškai iš vartotojų lentelės -->
+      <option value="all">All Users</option>
+      <option value="1">User 1</option>
+      <option value="2">User 2</option>
+      <!-- Pridėti daugiau vartotojų... -->
+    </select>
+
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="ordersBody"></tbody>
+    </table>
+
     <script src="orders.js"></script>
   </body>
 </html>

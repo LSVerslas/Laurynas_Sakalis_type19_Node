@@ -425,3 +425,88 @@ app.listen(port, () => {
     console.log(`Serveris veikia adresu http://localhost:${port}`);
 });
 
+// Pridėti middleware ir kitus reikalingus dalykus...
+
+app.use(bodyParser.json());
+
+// Simuliuojame prekių duomenis
+const shopItems = [
+    { id: 1, name: 'Item 1', price: 10.99, description: 'Description 1', image: 'image1.jpg', item_type_id: 1 },
+    { id: 2, name: 'Item 2', price: 19.99, description: 'Description 2', image: 'image2.jpg', item_type_id: 2 },
+    // Galite pridėti daugiau prekių...
+];
+
+// 6.2 POST /api/shop_items (pridėti prekę į parduotuvę)
+app.post('/api/shop_items', (req, res) => {
+    const { name, price, description, image, item_type_id } = req.body;
+
+    // Įvykdyti logiką prekės pridėjimo
+
+    const newItem = { id: shopItems.length + 1, name, price, description, image, item_type_id };
+    shopItems.push(newItem);
+
+    res.status(201).json({ message: 'Prekė pridėta sėkmingai' });
+});
+
+// Pradėti serverį
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+});
+
+// Pridėti middleware ir kitus reikalingus dalykus...
+
+app.use(bodyParser.json());
+
+// Simuliuojame užsakymų duomenis
+const orders = [
+    { id: 1, user_id: 1, item_id: 1, quantity: 2, total_price: 21.98, status: 'Pending' },
+    { id: 2, user_id: 2, item_id: 2, quantity: 1, total_price: 19.99, status: 'Completed' },
+    // Galite pridėti daugiau užsakymų...
+];
+
+// Simuliuojame vartotojų ir prekių duomenis
+const users = [
+    { id: 1, name: 'User 1' },
+    { id: 2, name: 'User 2' },
+    // Galite pridėti daugiau vartotojų...
+];
+
+const items = [
+    { id: 1, name: 'Item 1' },
+    { id: 2, name: 'Item 2' },
+    // Galite pridėti daugiau prekių...
+];
+
+// 7.2 GET /api/orders (gauti visus užsakymus)
+// 7.3 GET /api/orders/user/:user_id (gauti užsakymus pagal vartotojo ID)
+app.get('/api/orders/:user_id?', (req, res) => {
+    const userId = req.params.user_id;
+
+    const filteredOrders = userId ?
+        orders.filter(order => order.user_id === parseInt(userId)) :
+        orders;
+
+    const ordersWithNames = filteredOrders.map(order => {
+        const user = users.find(u => u.id === order.user_id);
+        const item = items.find(i => i.id === order.item_id);
+
+        return {
+            id: order.id,
+            user_name: user ? user.name : 'Unknown User',
+            item_name: item ? item.name : 'Unknown Item',
+            quantity: order.quantity,
+            total_price: order.total_price,
+            status: order.status
+        };
+    });
+
+    res.json(ordersWithNames);
+});
+
+// Pradėti serverį
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+});
+

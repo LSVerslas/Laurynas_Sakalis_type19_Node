@@ -10,7 +10,31 @@
   </head>
   <body>
     <h1>Add Item Page</h1>
-    <!-- Įtraukite prekės pridėjimo formą ir kitus elementus -->
+    <form id="addItemForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" step="0.01" required />
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <label for="image">Image URL:</label>
+      <input type="url" id="image" name="image" required />
+
+      <label for="item_type_id">Item Type:</label>
+      <select id="item_type_id" name="item_type_id" required>
+        <!-- Galite užpildyti pasirinkimus dinamiškai iš item_types lentelės -->
+        <option value="1">Food</option>
+        <option value="2">Drink</option>
+        <option value="3">Electronic</option>
+        <option value="4">Clothes</option>
+      </select>
+
+      <button type="button" onclick="addItem()">Add Item</button>
+    </form>
+
     <script src="add_item.js"></script>
   </body>
 </html>
