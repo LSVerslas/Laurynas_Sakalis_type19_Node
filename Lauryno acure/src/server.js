@@ -114,3 +114,73 @@ function queryDatabase(sql, params) {
 app.listen(port, () => {
   console.log(`Serveris veikia adresu http://localhost:${port}`);
 });
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'slaptazodis',
+    database: 'mano_db'
+  });
+  
+  db.connect((err) => {
+    if (err) {
+      throw err;
+    }
+    console.log('Prisijungta prie MySQL duomenų bazės');
+  });
+  
+  app.use(express.json());
+  
+  // 5.1 POST /api/shop_items - sukurti parduotuvės prekę
+  app.post('/api/shop_items', (req, res) => {
+    const { name, price, description, image, item_type_id } = req.body;
+    const sql = 'INSERT INTO shop_items (name, price, description, image, item_type_id) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [name, price, description, image, item_type_id], (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Klaida kuriant parduotuvės prekę' });
+      }
+      res.status(201).json({ id: result.insertId, message: 'Parduotuvės prekė sukurtas sėkmingai' });
+    });
+  });
+  
+  // 5.2 GET /api/shop_items - gauti visas parduotuvės prekes
+  app.get('/api/shop_items', (req, res) => {
+    const sql = 'SELECT * FROM shop_items';
+    db.query(sql, (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: 'Klaida gaunant parduotuvės prekes' });
+      }
+      res.json(results);
+    });
+  });
+  
+  // 5.3 GET /api/shop_items/:id - gauti parduotuvės prekę pagal id
+  app.get('/api/shop_items/:id', (req, res) => {
+    const itemId = req.params.id;
+    const sql = 'SELECT * FROM shop_items WHERE id = ?';
+    db.query(sql, [itemId], (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Klaida gaunant parduotuvės prekę' });
+      }
+      if (result.length === 0) {
+        return res.status(404).json({ error: 'Parduotuvės prekė nerasta' });
+      }
+      res.json(result[0]);
+    });
+  });
+  
+  // 5.4 DELETE /api/shop_items/:id - ištrinti parduotuvės prekę pagal id
+  app.delete('/api/shop_items/:id', (req, res) => {
+    const itemId = req.params.id;
+    const sql = 'DELETE FROM shop_items WHERE id = ?';
+    db.query(sql, [itemId], (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Klaida trinant parduotuvės prekę' });
+      }
+      res.json({ message: 'Parduotuvės prekė ištrinta sėkmingai' });
+    });
+  });
+  
+  app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+  });
