@@ -1,0 +1,12 @@
+/* styles.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 100px;
+  padding: 100px;
+  background-color: #aa6767;
+}
+
+h1 {
+  color: #333;
+}
