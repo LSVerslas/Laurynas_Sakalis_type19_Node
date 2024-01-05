@@ -350,3 +350,78 @@ const port = 3000;
 app.listen(port, () => {
     console.log(`Serveris veikia adresu http://localhost:${port}`);
 });
+
+// Pridėti middleware ir kitus reikalingus dalykus...
+
+app.use(bodyParser.json());
+
+// Simuliuojame vartotojo duomenis
+const users = [
+    { id: 1, email: 'test@example.com', password: 'password123', role: 'user' },
+    // Galite pridėti daugiau vartotojų...
+];
+
+// 4.2, 4.3, 4.4 POST /api/auth/register
+app.post('/api/auth/register', (req, res) => {
+    const { name, email, password, role } = req.body;
+
+    // Patikriname, ar vartotojas su tokiu paštu jau egzistuoja
+    const existingUser = users.find(u => u.email === email);
+
+    if (existingUser) {
+        return res.status(409).json({ error: 'Vartotojas su šiuo el. paštu jau egzistuoja' });
+    }
+
+    // Sukuriame naują vartotoją
+    const newUser = { id: users.length + 1, name, email, password, role };
+    users.push(newUser);
+
+    res.status(201).json({ message: 'Registracija sėkminga' });
+});
+
+// Pradėti serverį
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+});
+
+// Pridėti middleware ir kitus reikalingus dalykus...
+
+app.use(bodyParser.json());
+
+// Simuliuojame parduotuvės prekių duomenis
+const shopItems = [
+    { id: 1, name: 'Item 1', price: 10.99, description: 'Description 1', image: 'image1.jpg' },
+    { id: 2, name: 'Item 2', price: 19.99, description: 'Description 2', image: 'image2.jpg' },
+    // Galite pridėti daugiau prekių...
+];
+
+// 5.2 GET /api/shop_items
+app.get('/api/shop_items', (req, res) => {
+    res.json(shopItems);
+});
+
+// 5.4 POST /api/orders (pridėti prekę į krepšelį)
+app.post('/api/orders', (req, res) => {
+    const { shop_item_id, quantity } = req.body;
+
+    // Įvykdyti logiką pridėjimo į krepšelį
+
+    res.status(201).json({ message: 'Prekė pridėta į krepšelį' });
+});
+
+// 5.5 DELETE /api/shop_items/:id (ištrinti prekę iš parduotuvės)
+app.delete('/api/shop_items/:id', (req, res) => {
+    const itemId = parseInt(req.params.id);
+
+    // Įvykdyti logiką parduotuvės prekės ištrynimo
+
+    res.json({ message: 'Prekė ištrinta iš parduotuvės' });
+});
+
+// Pradėti serverį
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+});
+
