@@ -268,3 +268,53 @@ app.get('/api/user_roles', (req, res) => {
     });
   });
   
+  db.connect((err) => {
+    if (err) {
+      throw err;
+    }
+    console.log('Prisijungta prie MySQL duomenų bazės');
+  });
+  
+  app.use(express.json());
+  
+  // 9 Middleware patikrinti POST, PUT ir PATCH užklausas
+  const validateFields = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  };
+  
+  // 9.1 Jei užklausoje nėra visų reikalingų laukų, siųsti klaidos pranešimą iš serverio pusės
+  const checkRequiredFields = (requiredFields) => {
+    return (req, res, next) => {
+      const missingFields = requiredFields.filter(field => !req.body[field]);
+      if (missingFields.length > 0) {
+        return res.status(400).json({ error: `Trūksta privalomų laukų: ${missingFields.join(', ')}` });
+      }
+      next();
+    };
+  };
+  
+  // Pavyzdys naudojant middleware
+  app.post(
+    '/api/orders',
+    [
+      body('user_id').isInt(),
+      body('shop_item_id').isInt(),
+      body('quantity').isInt(),
+      body('total_price').isFloat(),
+      body('status').isString()
+    ],
+    validateFields,
+    checkRequiredFields(['user_id', 'shop_item_id', 'quantity', 'total_price', 'status']),
+    (req, res) => {
+      // ... Jūsų užklausos apdorojimo logika ...
+      res.json({ message: 'Užsakymas sukurtas sėkmingai' });
+    }
+  );
+  
+  app.listen(port, () => {
+    console.log(`Serveris veikia adresu http://localhost:${port}`);
+  });
