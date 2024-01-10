@@ -1,0 +1,40 @@
+# Užregistruoti vartotoją
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Jonas Gulbys",
+    "email": "jonas@flsdp.com",
+    "password": "securepass",
+    "role_id": 2
+}
+
+# Loginas
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "jonas@flsdp.com",
+    "password": "securepass"
+}
+
+# Naujai prekei sukurti
+POST http://localhost:3000/api/shop_items
+Content-Type: application/json
+
+{
+    "name": "Nauja prekė",
+    "price": 19.99,
+    "description": "Fantastyc produktas",
+    "image": "fan.jpg",
+    "item_type_id": 5
+}
+
+# Gauti visas prekes
+GET http://localhost:3000/api/shop_items
+
+# Gauti konkrečią prekę, pagal ID
+GET http://localhost:3000/api/shop_items/1
+
+# Ištrinti prekę, pagal ID
+DELETE http://localhost:3000/api/shop_items/1

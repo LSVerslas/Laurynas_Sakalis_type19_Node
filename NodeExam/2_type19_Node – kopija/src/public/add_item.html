@@ -1,0 +1,70 @@
+<!-- src/public/add_item.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Item</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <!-- Include the navigation bar -->
+    <div id="navbar-container"></div>
+
+    <script src="js/navbar.js"></script>
+
+    <div id="content">
+      <!-- Common content for all users -->
+
+      <!-- Additional content for admins -->
+      <div id="admin-content" style="display: none">
+        <!-- Content accessible only to admins -->
+        <!-- Your form for adding items here -->
+      </div>
+    </div>
+
+    <div id="content">
+      <!-- Common content for all users -->
+
+      <!-- Additional content for admins -->
+      <div id="admin-content" style="display: none">
+        <!-- Content accessible only to admins -->
+        <form id="add-item-form">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+
+          <label for="price">Price:</label>
+          <input type="number" id="price" name="price" required />
+
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" required></textarea>
+
+          <label for="image">Image URL:</label>
+          <input type="text" id="image" name="image" required />
+
+          <label for="itemType">Item Type:</label>
+          <select id="itemType" name="itemType" required>
+            <option value="1">Food</option>
+            <option value="2">Drink</option>
+            <option value="3">Electronic</option>
+            <option value="4">Clothes</option>
+          </select>
+
+          <button type="submit">Add Item</button>
+        </form>
+      </div>
+    </div>
+
+    <li id="nav-add-item"><a href="add_item.html">Add Item</a></li>
+
+    <div id="footer-container"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+
+    <script src="js/helper.js"></script>
+    <script src="js/add_item.js"></script>
+  </body>
+</html>

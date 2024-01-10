@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Cars</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Car App</h1>
+
+    <div id="cars-list">
+      <!-- Čia bus atvaizduojami automobiliai -->
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const response = await fetch("http://localhost:3000/cars");
+        const cars = await response.json();
+
+        const carsList = document.getElementById("cars-list");
+
+        cars.forEach((car) => {
+          const carElement = document.createElement("div");
+          carElement.innerHTML = `
+            <h2>${car.title}</h2>
+            <img src="${car.image}" alt="${car.title}">
+            <p>Price: $${car.price.toFixed(2)}</p>
+            <p>Number Plates: ${car.numberplates}</p>
+        `;
+          carsList.appendChild(carElement);
+        });
+      });
+    </script>
+  </body>
+</html>

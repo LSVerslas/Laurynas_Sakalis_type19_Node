@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authors and Books</title>
+
+    <!-- Įtraukti jQuery biblioteką iš CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+      }
+
+      .book-title {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Authors and Books</h1>
+
+    <!-- Lentelė, kurioje atvaizduosime duomenis apie knygas -->
+    <table id="booksTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Lentelė, kurioje atvaizduosime duomenis apie autorius -->
+    <table id="authorsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Book Count</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Lentelė, kurioje atvaizduosime duomenis apie autorių ir jų parašytas knygas -->
+    <table id="authorBooksTable">
+      <thead>
+        <tr>
+          <th>Author</th>
+          <th>Books</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      // Simuliuojame serverį su pavyzdiniais duomenimis
+      const fakeData = [
+        {
+          id: 1,
+          name: "John",
+          surname: "Doe",
+          title: "The Great Novel",
+          year: 2000,
+        },
+        {
+          id: 2,
+          name: "John",
+          surname: "Doe",
+          title: "Mystery of the Unknown",
+          year: 2005,
+        },
+        {
+          id: 3,
+          name: "Jane",
+          surname: "Smith",
+          title: "Fantastic Adventure",
+          year: 2010,
+        },
+        {
+          id: 4,
+          name: "Jane",
+          surname: "Smith",
+          title: "Journey to the Stars",
+          year: 2015,
+        },
+      ];
+
+      // Įterpiame duomenis į knygų lentelę
+      const booksTableBody = $("#booksTable tbody");
+      $.each(fakeData, (index, { id, title, year, name, surname }) => {
+        const authorFullName = `${name} ${surname}`;
+        booksTableBody.append(
+          `<tr><td>${id}</td><td>${title}</td><td>${year}</td><td>${authorFullName}</td></tr>`
+        );
+      });
+
+      // Grupuojame duomenis pagal autorius ir skaičiuojame kiekvieno autoriaus knygų kiekį
+      const authors = {};
+      $.each(fakeData, (index, { id, name, surname }) => {
+        const authorKey = `${name} ${surname}`;
+        if (!authors[authorKey]) {
+          authors[authorKey] = {
+            id,
+            name,
+            surname,
+            bookCount: 1,
+            books: [],
+          };
+        } else {
+          authors[authorKey].bookCount++;
+        }
+        authors[authorKey].books.push({
+          id,
+          title: fakeData[index].title,
+          year: fakeData[index].year,
+        });
+      });
+
+      // Įterpiame duomenis į autorių lentelę
+      const authorsTableBody = $("#authorsTable tbody");
+      $.each(authors, (key, { id, name, surname, bookCount }) => {
+        authorsTableBody.append(
+          `<tr><td>${id}</td><td>${name}</td><td>${surname}</td><td>${bookCount}</td></tr>`
+        );
+      });
+
+      // Įterpiame duomenis į trečią lentelę - autorių ir jų parašytas knygas
+      const authorBooksTableBody = $("#authorBooksTable tbody");
+      $.each(authors, (key, { name, surname, books, bookCount }) => {
+        const authorFullName = `${name} ${surname}`;
+        let booksHtml = "";
+        $.each(books, (index, { id, title }) => {
+          booksHtml += `<div><span class="book-title">${title}</span></div>`;
+        });
+        authorBooksTableBody.append(
+          `<tr><td>${authorFullName}</td><td>${booksHtml}</td></tr>`
+        );
+      });
+    </script>
+  </body>
+</html>

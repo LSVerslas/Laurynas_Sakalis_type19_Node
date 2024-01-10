@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orderiai</title>
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+
+    <script src="js/footer.js"></script>
+    <script src="js/orders.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <button id="top"><a href="index.html">Pagrindinis</a></button>
+        <button id="top"><a href="shop.html">Parduotuvė</a></button>
+        <button id="top"><a href="add_item.html">Pridėti prekę</a></button>
+
+        <button id="top"><a href="login.html">Prisijungti</a></button>
+        <button id="top"><a href="register.html">Registruotis</a></button>
+      </nav>
+    </header>
+    <br />
+    <h1>Užsakymai</h1>
+
+    <div id="content">
+      <table>
+        <thead>
+          <tr>
+            <th>Vartotojo ID</th>
+            <th>Prekės ID</th>
+            <th>Kiekis</th>
+            <th>Pilna kaina</th>
+            <th>Statusas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Užsakymai sugeneruoti iš BACKEND -->
+        </tbody>
+      </table>
+
+      <label for="filter-user-id">Filter by User ID:</label>
+      <select id="filter-user-id" name="filter-user-id">
+        <!-- Vartotojai -->
+      </select>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div id="footer-container"></div>
+  </body>
+</html>
